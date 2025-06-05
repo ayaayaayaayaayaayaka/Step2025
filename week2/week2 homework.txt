@@ -5,9 +5,6 @@
 design document of hash_table.py
 アルゴリズムの説明、プログラムの実行方法、工夫した点などを第三者にも伝わるように「わかりやすく」書く
 
-
-
-
 概要
 key(string)とvalue(何の型でもOK)をペアで持つデータを格納するためのhash tableを作った
 put、get、delete機能を実装した。
@@ -28,6 +25,9 @@ functional_test
 
 performance_test
 0~1億のうちから乱数を生成し、それらをkeyとvalueにして100回ずつput、get、deleteした。
+hash *= ord(i)の時
+   Execution time : 15.828471957999682 seconds
+hash += ord(i)の時
 
 
 工夫した点

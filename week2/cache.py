@@ -1,5 +1,6 @@
 import sys
-
+import time
+# %%
 # Implement a data structure that stores the most recently accessed N pages.
 # See the below test cases to see how it should work.
 #
@@ -20,9 +21,7 @@ class Cache:
         self.n = n
         self.cache_dic = {}
         self.head = None
-        #------------------------#
-        # Write your code here!  #
-        #------------------------#
+      
         
     def is_in_cache(self, url):
         if url in self.cache_dic.keys():
@@ -36,6 +35,8 @@ class Cache:
     # |contents|: The contents of the URL
     def access_page(self, url, contents):
         if self.is_in_cache(url):
+            if self.head.url == url:
+                return
             # Adjust the neighboring previous nodes
             item = self.head
             while item.next:
@@ -72,6 +73,7 @@ class Cache:
         while item:
             page_lists.append(item.url)
             item = item.next
+        return page_lists
         # return type : list[urls in order]
 
 
@@ -154,4 +156,10 @@ def cache_test():
 
 
 if __name__ == "__main__":
+    start = time.perf_counter()
     cache_test()
+    end = time.perf_counter()
+    excution_time = end - start
+    print(f"Execution time : {excution_time} seconds")
+
+# %%

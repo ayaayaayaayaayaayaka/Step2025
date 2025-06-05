@@ -61,7 +61,6 @@ class HashTable:
         self.bucket_size = 97
         self.buckets = [None] * self.bucket_size
         self.item_count = 0
-        self.dic = {}
 
     # Put an item to the hash table. If the key already exists, the
     # corresponding value is updated to a new value.
@@ -73,9 +72,7 @@ class HashTable:
     def put(self, key, value):
         assert type(key) == str
         self.check_size() # Note: Don't remove this code.
-        hash_of_key = calculate_hash(key)
-        bucket_index = hash_of_key % self.bucket_size
-        self.dic[key] = hash_of_key
+        bucket_index = calculate_hash(key) % self.bucket_size
         item = self.buckets[bucket_index]
         while item:
             if item.key == key:
@@ -96,9 +93,7 @@ class HashTable:
     def get(self, key):
         assert type(key) == str
         self.check_size() # Note: Don't remove this code.
-        if key not in self.dic:
-            return (None,False)
-        bucket_index = self.dic[key] % self.bucket_size
+        bucket_index = calculate_hash(key) % self.bucket_size
         item = self.buckets[bucket_index]
         while item:
             if item.key == key:
@@ -114,9 +109,7 @@ class HashTable:
     def delete(self, key):
         assert type(key) == str
         self.check_size() # Note: Don't remove this code.
-        if key not in self.dic:
-            return False
-        bucket_index = self.dic[key] % self.bucket_size
+        bucket_index = calculate_hash(key) % self.bucket_size
         item = self.buckets[bucket_index]
         prev_item = None
         while item:
@@ -178,7 +171,7 @@ class HashTable:
         for item in old_hash:
             while item:
                 next_item = item.next
-                new_index = self.dic[item.key] % self.bucket_size
+                new_index = calculate_hash(item.key) % self.bucket_size
                 item.next = self.buckets[new_index]
                 self.buckets[new_index] = item
                 item = next_item
@@ -292,11 +285,63 @@ def performance_test():
         for i in range(10000):
             rand = random.randint(0, 100000000)
             hash_table.delete(str(rand))
+    
+    
 
     assert hash_table.size() == 0
     print("Performance tests passed!")
 
 
 if __name__ == "__main__":
+
+    start = time.perf_counter()
     #functional_test()
     performance_test()
+    end = time.perf_counter()
+    excution_time = end - start
+    print(f"Execution time : {excution_time} seconds")
+
+# %%
+
+# visualize
+from matplotlib import pyplot as plt
+x = [10000 * i for i in range(100)]
+y1 = [
+    0.086309, 0.141542, 0.202554, 0.262550, 0.350877, 0.413893, 0.495266, 0.651208,
+    0.982938, 1.093976, 1.424547, 1.680312, 2.053131, 2.401938, 2.820783, 3.243775,
+    3.865148, 4.017057, 4.383031, 4.894019, 5.245859, 5.618590, 6.034441, 6.463551,
+    6.869392, 7.260364, 7.720317, 8.740745, 8.830340, 9.117516, 9.668195, 9.953004,
+    12.332527, 11.231821, 11.384634, 11.707966, 12.922308, 12.254276, 12.730150, 13.072281,
+    13.978588, 14.158214, 15.347943, 15.332875, 15.473192, 16.035329, 16.586896, 16.891870,
+    17.337582, 17.843162, 18.444680, 18.517569, 18.670502, 19.165287, 19.991839, 19.568051,
+    20.491242, 20.429838, 21.449067, 21.823369, 21.717038, 22.039282, 23.332333, 23.552110,
+    34.545949, 24.076877, 25.166477, 24.930728, 25.212562, 25.674818, 25.995456, 27.264397,
+    26.537497, 27.503351, 28.288542, 27.751970, 28.678446, 28.949422, 28.911345, 29.713363,
+    29.687544, 30.610669, 30.928979, 31.282778, 31.299691, 33.144411, 32.320645, 32.349620,
+    32.819852, 33.936807, 34.204497, 34.494442, 34.421354, 34.379912, 36.208493, 36.397774,
+    36.649880, 36.274377, 36.250461, 36.548504
+]
+y2 = [
+    0.064673, 0.032741, 0.035836, 0.027418, 0.048097, 0.029373, 0.032031, 0.033566,
+    0.099721, 0.048356, 0.055038, 0.213108, 0.069713, 0.072183, 0.077560, 0.087566,
+    0.142481, 0.047914, 0.051453, 0.051247, 0.050239, 0.052898, 0.055258, 0.060470,
+    0.056710, 0.057513, 0.061857, 0.312189, 0.068137, 0.067484, 0.069522, 0.072294,
+    0.273009, 0.072267, 0.076174, 0.075707, 0.080322, 0.081342, 0.082420, 0.084605,
+    0.084658, 0.086385, 0.089036, 0.090729, 0.095021, 0.096955, 0.096790, 0.099074,
+    0.505506, 0.101779, 0.101477, 0.105981, 0.106592, 0.107685, 0.112461, 0.111742,
+    0.115785, 0.115036, 0.117010, 0.122660, 0.121221, 0.126231, 0.123723, 0.130392,
+    0.533390, 0.138632, 0.134885, 0.138420, 0.137723, 0.137893, 0.141316, 0.144269,
+    0.147296, 0.754324, 0.147595, 0.176316, 0.149889, 0.153016, 0.152634, 0.156170,
+    0.155254, 0.158728, 0.160544, 0.163292, 0.162336, 0.168812, 0.167030, 0.168241,
+    0.165179, 0.177061, 0.174070, 0.175896, 0.177582, 0.179967, 0.180343, 0.183187,
+    0.185708, 0.185584, 0.186862, 0.191735
+]
+plt.scatter(x, y1, marker='o', label = "hash : sum")
+plt.scatter(x, y2, marker='o', label = "hash : product")
+plt.xlabel("Items")
+plt.ylabel("Executed time (seconds)")
+plt.title("Relationship between Hash Functions and Execution Time")
+plt.legend()
+plt.grid(True)
+plt.show()
+# %%
