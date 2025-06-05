@@ -1,5 +1,7 @@
+# %%
 import sys
 import time
+from hash_table import HashTable
 # %%
 # Implement a data structure that stores the most recently accessed N pages.
 # See the below test cases to see how it should work.
@@ -7,7 +9,7 @@ import time
 # Note: Please do not use a library like collections.OrderedDict). The goal is
 #       to implement the data structure yourself!
 
-class Item:
+class Node:
     def __init__(self, url, contents, next):
         self.url = url
         self.contents = contents
@@ -19,22 +21,21 @@ class Cache:
     # |n|: The size of the cache.
     def __init__(self, n):
         self.n = n
-        self.cache_dic = {}
+        self.hash_table = HashTable()
+        # rtype put() -> boolean
+        # rtype get() -> (the value of the item, boolean)
+        # rtype delete() -> boolean
         self.head = None
       
-        
-    def is_in_cache(self, url):
-        if url in self.cache_dic.keys():
-            return True
-        return False
-
+     
 
     # Access a page and update the cache so that it stores the most recently
     # accessed N pages. This needs to be done with mostly O(1).
     # |url|: The accessed URL
     # |contents|: The contents of the URL
     def access_page(self, url, contents):
-        if self.is_in_cache(url):
+        if self.hash_table.get(url)[1]:
+            # 元々キャッシュリストの中に存在する時の話
             if self.head.url == url:
                 return
             # Adjust the neighboring previous nodes
@@ -45,21 +46,21 @@ class Cache:
                 if item.url == url:
                     prev_item.next = item.next
             # Move the most recently accessed page to the head of the linked list            
-            new_item = Item(url, contents, self.head)
+            new_item = Node(url, contents, self.head)
             self.head = new_item
             
         else:
             #　Delete the oldest item
-            if len(self.cache_dic) == 4:
+            if self.hash_table.size() == self.n:
                 item = self.head
                 while item.next:
                     prev_item = item
                     item = item.next
-                del self.cache_dic[item.url]
+                self.hash_table.delete(item.url)
                 prev_item.next = None
             # store this page
-            self.cache_dic[url] = contents
-            new_item = Item(url, contents, self.head)
+            self.hash_table.put(url, contents)
+            new_item = Node(url, contents, self.head)
             self.head = new_item
            
         # cache the url and contents properly
@@ -152,7 +153,7 @@ def cache_test():
     #   (most recently accessed)<-- "a.com", "e.com", "f.com", "c.com" -->(least recently accessed)
     assert cache.get_pages() == ["a.com", "e.com", "f.com", "c.com"]
 
-    print("Tests passed!")
+    print("Cache Tests passed!")
 
 
 if __name__ == "__main__":
