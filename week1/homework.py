@@ -1,28 +1,3 @@
-# main.py
-
-#%%
-#二分探索
-from typing import Counter
-
-
-def main():
-    dog = Dog("pochi")
-    dog.bark()
-
-class Dog():
-    def __init__(self,name):
-        self.name = name
-    
-    def bark(self):
-        print(self.name + "bark!")
-
-if __name__ == "__main__":
-    main()
-
-# %%
-s = "abca"
-set(s)
-
 # %%
 from collections import Counter
 
@@ -97,6 +72,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
 # %%
 
 def testcase_prepare():
