@@ -2,6 +2,8 @@
 import sys
 import time
 from hash_table import HashTable
+import random
+
 # %%
 # Implement a data structure that stores the most recently accessed N pages.
 # See the below test cases to see how it should work.
@@ -10,10 +12,11 @@ from hash_table import HashTable
 #       to implement the data structure yourself!
 
 class Node:
-    def __init__(self, url, contents, next):
+    def __init__(self, url, contents, next, prev):
         self.url = url
         self.contents = contents
         self.next = next
+        self.prev = prev
 
 
 class Cache:
@@ -44,24 +47,36 @@ class Cache:
                 prev_item = item
                 item = item.next
                 if item.url == url:
-                    prev_item.next = item.next
+                    prev_item.next, item.next.prev = item.next, prev_item
+                    break
             # Move the most recently accessed page to the head of the linked list            
-            new_item = Node(url, contents, self.head)
+            new_item = Node(url, contents, self.head, self.head.prev)
+            self.head.prev.next = new_item
+            self.head.prev = new_item
             self.head = new_item
+            return
             
         else:
             #　Delete the oldest item
             if self.hash_table.size() == self.n:
-                item = self.head
-                while item.next:
-                    prev_item = item
-                    item = item.next
+                item = self.head.prev
                 self.hash_table.delete(item.url)
-                prev_item.next = None
+                new_item = Node(url, contents, self.head, self.head.prev.prev)
+                self.head.prev.prev.next = new_item
+                self.head.prev = new_item
             # store this page
-            self.hash_table.put(url, contents)
-            new_item = Node(url, contents, self.head)
+            elif self.head:
+                new_item = Node(url, contents, self.head, self.head.prev)
+                self.head.prev.next = new_item
+                self.head.prev = new_item
+
+            else:
+                new_item = Node(url, contents, None, None)
+                new_item.next = new_item
+                new_item.prev = new_item 
+            self.hash_table.put(url, contents)             
             self.head = new_item
+            return
            
         # cache the url and contents properly
 
@@ -74,6 +89,8 @@ class Cache:
         while item:
             page_lists.append(item.url)
             item = item.next
+            if item == self.head:
+                break
         return page_lists
         # return type : list[urls in order]
 
@@ -89,7 +106,6 @@ def cache_test():
     cache.access_page("a.com", "AAA")
     # "a.com" is cached.
     assert cache.get_pages() == ["a.com"]
-
     # Access "b.com".
     cache.access_page("b.com", "BBB")
     # The cache is updated to:
@@ -113,20 +129,17 @@ def cache_test():
     # The cache is updated to:
     #   (most recently accessed)<-- "d.com", "c.com", "b.com", "a.com" -->(least recently accessed)
     assert cache.get_pages() == ["d.com", "c.com", "b.com", "a.com"]
-
     # Access "a.com" again.
-    cache.access_page("a.com", "AAA")
+    cache.access_page("a.com", "AAA") 
     # The cache is updated to:
     #   (most recently accessed)<-- "a.com", "d.com", "c.com", "b.com" -->(least recently accessed)
     assert cache.get_pages() == ["a.com", "d.com", "c.com", "b.com"]
-
     cache.access_page("c.com", "CCC")
     assert cache.get_pages() == ["c.com", "a.com", "d.com", "b.com"]
     cache.access_page("a.com", "AAA")
     assert cache.get_pages() == ["a.com", "c.com", "d.com", "b.com"]
     cache.access_page("a.com", "AAA")
     assert cache.get_pages() == ["a.com", "c.com", "d.com", "b.com"]
-
     # Access "e.com".
     cache.access_page("e.com", "EEE")
     # The cache is full, so we need to remove the least recently accessed page "b.com".
@@ -155,12 +168,44 @@ def cache_test():
 
     print("Cache Tests passed!")
 
+# キャッシュサイズが大きくなっても性能が落ちないかどうかチェック
+def generate_large_cache_test(cache_class, cache_size=10000, num_accesses=100000):
+    cache = cache_class(cache_size)
+    urls = [f"page{i:05d}.com" for i in range(cache_size * 2)]  # 多めに用意
+
+    start_time = time.perf_counter()
+
+    for i in range(num_accesses):
+        # 80%の確率で既存URLを参照、20%で新規URLを投入
+        if i < cache_size or random.random() < 0.2:
+            url = random.choice(urls)
+        else:
+            url = f"page{random.randint(0, cache_size*2):05d}.com"
+        contents = f"Contents of {url}"
+        cache.access_page(url, contents)
+        
+        # 必要なら一部だけprint
+        if i % 20000 == 0:
+            print(f"Accessed {i} pages")
+
+    end_time = time.perf_counter()
+    execution_time = end_time - start_time
+    print(f"\nLarge cache test completed!")
+    print(f"Cache size: {cache_size}")
+    print(f"Number of accesses: {num_accesses}")
+    print(f"Execution time: {execution_time:.4f} seconds")
+    
+    # 最終結果表示（必要に応じて）
+    pages = cache.get_pages()
+    print(f"Number of pages stored in cache: {len(pages)}")
+    print(f"Most recent pages (top 10): {pages[:10]}")
+
 
 if __name__ == "__main__":
     start = time.perf_counter()
-    cache_test()
+    # cache_test()
+    generate_large_cache_test(Cache, cache_size=10000, num_accesses=100000)
     end = time.perf_counter()
     excution_time = end - start
     print(f"Execution time : {excution_time} seconds")
-
 # %%
