@@ -17,7 +17,6 @@ class Node:
         self.contents = contents
         self.next = next
         self.prev = prev
-        self.head = None
 
 
 class Cache:
@@ -28,7 +27,9 @@ class Cache:
         self.hash_table = HashTable()
         # rtype put() -> boolean
         # rtype get() -> (the value of the item, boolean)
-        # rtype delete() -> boolean
+        # rtype delete() -> boolean            
+        self.head = None
+
       
      
 
