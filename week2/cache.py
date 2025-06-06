@@ -17,6 +17,7 @@ class Node:
         self.contents = contents
         self.next = next
         self.prev = prev
+        self.head = None
 
 
 class Cache:
@@ -28,7 +29,6 @@ class Cache:
         # rtype put() -> boolean
         # rtype get() -> (the value of the item, boolean)
         # rtype delete() -> boolean
-        self.head = None
       
      
 
