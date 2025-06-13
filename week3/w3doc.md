@@ -1,6 +1,7 @@
 **homework 5**
 
-modularized_calculator
+modularized_calculator:
+
 evaluateのなかで括弧、掛け算割り算、足し算引き算の順にそれぞれ演算する関数を作って順番に処理した。
 def evaluate(tokens,left,right): # ある式を演算してくれる関数
     tokens,right = eval_paren(tokens,left,right) # カッコ内を先に計算する、カッコ無しの式が返ってくる。abs.int,roundもここでまとめて処理
@@ -9,6 +10,7 @@ def evaluate(tokens,left,right): # ある式を演算してくれる関数
     return ans
 
 eval_paren:
+
   カッコを見つけ出し、カッコ中の計算を回して、tokensからカッコを消去しておいてくれる関数。
   eval_paren後はtokensにカッコが存在しなくなる。
   左カッコをstackに収納することで右カッコを検知した際に対応する左カッコのindexをget。
@@ -19,16 +21,20 @@ eval_paren:
   また、abs.int,roundには必ずカッコが付随することに注目し、eval_parenの条件分岐のなかでabs.int,roundを処理。abs,int,roundに付随するカッコとただのカッコでは、tokensの再生成の際のindexのずれが異なることにも注意した。
 
 eval_mul_div:
+
   *か/を検知したらその前後のnumberを取ってきて演算し、右側のnumberに演算結果
   をメモしておく。左側のnumberは"type"を"NUMBER”からNoneにすることで無効化
   した。
 
 eval_add_sub:
+
   直前の演算子のtypeをis_plusというflagでメモしておく。
   "type":"NUMBER”があればansにその値をaddまたはsubしてくれる。addかsubかの判断はis_plusを参照すればよい。
   最終的なansを返す。
 
-messy_draft: 括弧内の計算をしたあと、括弧とその中の数式をtokensから抜く操作をすると計算量がかさむのではないかと考え、なんとかtokensのlist再生成を阻止し、そのままのlistを利用しようと試行錯誤した。具体的には、括弧内の演算結果をRPARENとLPARENに格納、以降の演算でかっこが出てきたら右かっこまでskipすることでそのままのtokenを用いて演算することができるようになった。条件分岐が複雑で見づらいコードになってしまった。また、modularizeにも失敗している。
+messy_draft: 
+
+括弧内の計算をしたあと、括弧とその中の数式をtokensから抜く操作をすると計算量がかさむのではないかと考え、なんとかtokensのlist再生成を阻止し、そのままのlistを利用しようと試行錯誤した。具体的には、括弧内の演算結果をRPARENとLPARENに格納、以降の演算でかっこが出てきたら右かっこまでskipすることでそのままのtokenを用いて演算することができるようになった。条件分岐が複雑で見づらいコードになってしまった。また、modularizeにも失敗している。
 
 evaluate => 最初に掛け算割り算を計算、その後足し引き
 *割り算掛け算
