@@ -153,7 +153,7 @@ def process_num(subleft,left,right,tokens,index,func_set,func,evaluate):
     index = subleft - left - 1
     return tokens,index
 
-def eval_parensis(tokens,left,right):
+def eval_paren(tokens,left,right):
     index = left
     open_left_stack = []
     abs_set = set()
@@ -186,7 +186,7 @@ def eval_parensis(tokens,left,right):
     return tokens,right
 
 def evaluate(tokens,left,right): # ある式を演算してくれる関数
-    tokens,right = eval_parensis(tokens,left,right) # カッコ内を先に計算する、カッコ無しの式が返ってくる。abs.int,roundもここでまとめて処理
+    tokens,right = eval_paren(tokens,left,right) # カッコ内を先に計算する、カッコ無しの式が返ってくる。abs.int,roundもここでまとめて処理
     eval_mul_div(tokens,left,right) # 割り算掛け算を処理
     ans = eval_add_sub(tokens,left,right) # 最後、足し算引き算をして答えを出してくれる
     return ans
