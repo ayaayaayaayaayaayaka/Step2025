@@ -174,6 +174,7 @@ def generate_large_cache_test(cache_class, cache_size=10000, num_accesses=100000
     urls = [f"page{i:05d}.com" for i in range(cache_size * 2)]  # 多めに用意
 
     start_time = time.perf_counter()
+    start = start_time
 
     for i in range(num_accesses):
         # 80%の確率で既存URLを参照、20%で新規URLを投入
@@ -187,6 +188,10 @@ def generate_large_cache_test(cache_class, cache_size=10000, num_accesses=100000
         # 必要なら一部だけprint
         if i % 20000 == 0:
             print(f"Accessed {i} pages")
+            end = time.perf_counter()
+            diff = end - start
+            print(f"Executed time : {diff}")
+            start = end
 
     end_time = time.perf_counter()
     execution_time = end_time - start_time
@@ -203,9 +208,9 @@ def generate_large_cache_test(cache_class, cache_size=10000, num_accesses=100000
 
 if __name__ == "__main__":
     start = time.perf_counter()
-    # cache_test()
-    generate_large_cache_test(Cache, cache_size=10000, num_accesses=100000)
+    cache_test()
     end = time.perf_counter()
-    excution_time = end - start
-    print(f"Execution time : {excution_time} seconds")
-# %%
+    diff = end - start
+    print(f"Execution time : {diff}")
+    # generate_large_cache_test(Cache, cache_size=10000, num_accesses=100000)
+    # %%
