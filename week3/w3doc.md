@@ -1,6 +1,6 @@
 **homework 5**
 
-modularized_calculator:
+**modularized_calculator.py**:
 
 evaluateのなかで括弧、掛け算割り算、足し算引き算の順にそれぞれ演算する関数を作って順番に処理した。
 def evaluate(tokens,left,right): # ある式を演算してくれる関数
@@ -32,7 +32,7 @@ eval_add_sub:
   "type":"NUMBER”があればansにその値をaddまたはsubしてくれる。addかsubかの判断はis_plusを参照すればよい。
   最終的なansを返す。
 
-messy_draft: 
+**modularized_calculator_messy_draft.py**: 
 
 括弧内の計算をしたあと、括弧とその中の数式をtokensから抜く操作をすると計算量がかさむのではないかと考え、なんとかtokensのlist再生成を阻止し、そのままのlistを利用しようと試行錯誤した。具体的には、括弧内の演算結果をRPARENとLPARENに格納、以降の演算でかっこが出てきたら右かっこまでskipすることでそのままのtokenを用いて演算することができるようになった。条件分岐が複雑で見づらいコードになってしまった。また、modularizeにも失敗している。
 
