@@ -1,4 +1,3 @@
-ord("a")
 
 # %%
 from ctypes import resize
