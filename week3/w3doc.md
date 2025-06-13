@@ -21,13 +21,13 @@ def evaluate(tokens,left,right): # ある式を演算してくれる関数
 
   また、abs.int,roundには必ずカッコが付随することに注目し、eval_parenの条件分岐のなかでabs.int,roundを処理。abs,int,roundに付随するカッコとただのカッコでは、tokensの再生成の際のindexのずれが異なることにも注意した。
 
-## eval_mul_div:
+### eval_mul_div:
 
   *か/を検知したらその前後のnumberを取ってきて演算し、右側のnumberに演算結果
   をメモしておく。左側のnumberは"type"を"NUMBER”からNoneにすることで無効化
   した。
 
-## eval_add_sub:
+### eval_add_sub:
 
   直前の演算子のtypeをis_plusというflagでメモしておく。
   "type":"NUMBER”があればansにその値をaddまたはsubしてくれる。addかsubかの判断はis_plusを参照すればよい。
