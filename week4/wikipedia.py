@@ -154,7 +154,7 @@ class Wikipedia:
             for id in self.links: # O(N)
                 new_pagerank[id] = 0  # 初期化
             result = [] # 結果メモ用リスト
-            for id in self.links: # O(N+E)　<- 今のコードであれば正しい　新し区それぞれ足し始めたらN^2 + E
+            for id in self.links: # O(N+E)　
                 if len(self.links[id]) == 0: # 行き止まりノード
                     res += pagerank[id] / N # あとで全員一斉に更新するようメモ
                 else:
