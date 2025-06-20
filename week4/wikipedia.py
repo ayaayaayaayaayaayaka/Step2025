@@ -141,7 +141,6 @@ class Wikipedia:
         new_pagerank = {} # 初期化
         for id in self.links: # O(N)
             pagerank[id] = 1.0 # 初期化
-        memo = {}
         N = len(self.links) # Node数
         loop = 0 # loopカウント
         diff = 10000
