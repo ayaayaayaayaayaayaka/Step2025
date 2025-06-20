@@ -1,4 +1,3 @@
-# homework 5
 ## modularized_calculator.py:
 
 evaluateのなかで括弧、掛け算割り算、足し算引き算の順に該当関数を用い、順番に処理した。
