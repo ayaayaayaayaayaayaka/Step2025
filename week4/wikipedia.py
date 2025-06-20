@@ -158,21 +158,11 @@ class Wikipedia:
             for id in self.links: # O(N+E)　<- 今のコードであれば正しい　新し区それぞれ足し始めたらN^2 + E
                 if len(self.links[id]) == 0: # 行き止まりノード
                     res += pagerank[id] / N # あとで全員一斉に更新するようメモ
-                    # 特定のidについては先に足しちゃダメなのに足しちゃうことがわかっているので、-なんとかする旨をメモしておく
-                    # 最終的に答えがあっていればいい、というアイデアはかなり使える！
-                    # N - 1?
-                    # 自分のノードだけ足さないように配慮する必要がある
-                    # memo[id] -= pagerank[id] / N
                 else:
                     res += pagerank[id] * 0.15 / N # 0.15 -> あとで全員一斉に更新するようメモ
                     add = pagerank[id] * 0.85 / len(self.links[id]) # 0.85 -> 近所に分ける
                     for neighbor in self.links[id]:
                         new_pagerank[neighbor] += add # 該当ノードのpagerankのみ更新
-                        #memo[neighbor] -= pagerank[id] * 0.15 / (N - 1)
-                    # memo[id] -= pagerank[id] * 0.15 / N
-                    # N - 1?
-                    # 自分のノードだけ足さないように配慮する必要がある
-                    # 85%のやつは除く？？
             for id in self.links: # O(N)
                 diff += (new_pagerank[id] - pagerank[id] + res ) ** 2 # 誤差項
                 pagerank[id] = new_pagerank[id] + res   # 共通項を一斉に更新
@@ -233,7 +223,7 @@ if __name__ == "__main__":
     # # Example
     # wikipedia.find_most_linked_pages()
     # # Homework #1
-    # wikipedia.find_shortest_path("渋谷", "パレートの法則")
+    wikipedia.find_shortest_path("渋谷", "パレートの法則")
     # Homework #2
     wikipedia.find_most_popular_pages()
     # Homework #3 (optional)
