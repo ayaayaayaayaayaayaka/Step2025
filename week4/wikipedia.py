@@ -151,8 +151,6 @@ class Wikipedia:
             res = 0 # 全ノード共通の足し算項、初期化
             diff = 0 # pagerankがループ一回でどれくらい更新されたか、初期化
             sum_pageranks = 0 # pagerankの総和、初期化
-            # for id in self.links: # O(N)
-            #     memo[id] = 0 # 初期化
             for id in self.links: # O(N)
                 new_pagerank[id] = 0  # 初期化
             result = [] # 結果メモ用リスト
