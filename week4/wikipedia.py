@@ -89,13 +89,6 @@ class Wikipedia:
     # 30 行程度で書けます😀
 
     def find_shortest_path(self, start, goal):
-        # たとえば、pathが一直線だったら
-        # 時間も空間も伸びて、n^2になる
-        # "pathを復元する"
-        # 距離を計算してそれを保存する -> O(N + E)
-        # 終点から逆を辿る
-        # 変の向きを逆にしたグラフを考え、最短距離-1をまたかんがえ、これを繰り返すと元に戻れる
-        # 行きも帰りもO(N+E)で実行できる
         queue = deque() # 探索中のノード集合
         seen = set() # 訪問済みid集合
         start_id = self.inverted_titles[start] # start titleをidに
@@ -117,6 +110,15 @@ class Wikipedia:
                     seen.add(des) # 訪問済みidに追加
         print("not found")
         return
+        
+    ## 改善できるところ
+    # たとえば、pathが一直線だったら
+    # 時間も空間も伸びて、n^2になる
+    # "pathを復元する"
+    # 距離を計算してそれを保存する -> O(N + E)
+    # 終点から逆を辿る
+    # 変の向きを逆にしたグラフを考え、最短距離-1をまたかんがえ、これを繰り返すと元に戻れる
+    # 行きも帰りもO(N+E)で実行できる
     
 
 
