@@ -20,4 +20,5 @@ def calculate_total_distance(tour,dist):
     for next_city in tour[1:]:
         total_dist += dist[current_city][next_city]
         current_city = next_city
+    total_dist += dist[tour[-1]][tour[0]]
     return total_dist
