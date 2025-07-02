@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+"""
+コードレビューでご指摘いただいたミス、tourの扱いについて、solver_greedy_2opt_improve.pyで修正しました。
+ありがとうございます！
+"""
+
+
 import sys
 import math
 
