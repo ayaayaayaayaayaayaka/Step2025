@@ -9,7 +9,8 @@ def distance(city1, city2):
 
 def greedy(unvisited_cities,dist):
     current_city = 0
-    tour = [current_city]
+    tour =[]
+    tour.append(current_city)
      
     while unvisited_cities:
         next_city = min(unvisited_cities,
@@ -30,12 +31,34 @@ def reverse_segment(improve_tour,swap_start,swap_end):
 
 def two_opt(original_tour,dist):
     improve_tour = original_tour[:]
-    for i in range(len(improve_tour)-3):
-        for j in range(i+2,len(improve_tour)-1):
-            if dist[improve_tour[i]][improve_tour[i+1]] + dist[improve_tour[j]][improve_tour[j+1]] > dist[improve_tour[i]][improve_tour[j]] + dist[improve_tour[i+1]][improve_tour[j+1]]:
-                reverse_segment(improve_tour,i+1,j)
+    size = len(improve_tour)
+    improved = True
+    while improved: # 改善の余地がなくなるまでループし続ける
+        improved = False
+        for i in range(size-1):
+            for j in range(i + 2,size):
+                i_plus_1 = i + 1
+                j_plus_1 = (j + 1) % size # jが最後の都市の場合、次は0番目の都市に戻る
+
+                # 現在の2辺の合計距離
+                current_dist = dist[improve_tour[i]][improve_tour[i_plus_1]] + dist[improve_tour[j]][improve_tour[j_plus_1]]
+                # 繋ぎ変えた場合の2辺の合計距離
+                new_dist = dist[improve_tour[i]][improve_tour[j]] + dist[improve_tour[i_plus_1]][improve_tour[j_plus_1]]
+
+                if new_dist < current_dist:
+                    # 改善が見られたら、i+1からjまでの区間を反転させる
+                    reverse_segment(improve_tour, i + 1, j)
+                    improved = True # 改善があったことを記録
+    
     return improve_tour
 
+# genetic algorythm
+def ga():
+    return
+
+# ant colony optimization
+def aco():
+    return
 
 def solve(cities):
     N = len(cities)
@@ -56,9 +79,4 @@ if __name__ == '__main__':
     assert len(sys.argv) > 1
     tour,total_dist = solve(read_input(sys.argv[1]))
     print_tour(tour)
-    print(f"total distance: {total_dist}")tour)-3):
-        for j in range(i+2,len(tour)-1):
-            if dist[improve_tour[i]][improve_tour[i+1]] + dist[improve_tour[j]][improve_tour[j+1]] > dist[improve_tour[i]][improve_tour[j]] + dist[improve_tour[i+1]][improve_tour[j+1]]:
-                reverse_segment(improve_tour,i+1,j)
-    return improve_tour
-
+    print(f"total distance: {total_dist}")
