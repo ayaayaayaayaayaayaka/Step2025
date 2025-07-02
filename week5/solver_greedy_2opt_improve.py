@@ -19,22 +19,22 @@ def greedy(unvisited_cities,dist):
         current_city = next_city
     return tour
 
-def reverse_segment(tour,swap_start,swap_end):
+def reverse_segment(improve_tour,swap_start,swap_end):
     left = swap_start
     right = swap_end
     while left < right:
-        tour[left],tour[right] = tour[right],tour[left]
+        improve_tour[left],improve_tour[right] = improve_tour[right],improve_tour[left]
         left += 1
         right -= 1
     return 
 
 def two_opt(original_tour,dist):
-    tour = original_tour[:]
+    improve_tour = original_tour[:]
     for i in range(len(tour)-3):
         for j in range(i+2,len(tour)-1):
-            if dist[tour[i]][tour[i+1]] + dist[tour[j]][tour[j+1]] > dist[tour[i]][tour[j]] + dist[tour[i+1]][tour[j+1]]:
-                reverse_segment(tour,i+1,j)
-    return tour
+            if dist[improve_tour[i]][improve_tour[i+1]] + dist[improve_tour[j]][improve_tour[j+1]] > dist[improve_tour[i]][improve_tour[j]] + dist[improve_tour[i+1]][improve_tour[j+1]]:
+                reverse_segment(improve_tour,i+1,j)
+    return improve_tour
 
 
 def solve(cities):
