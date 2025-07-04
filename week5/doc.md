@@ -26,7 +26,16 @@ URL, https://www.cst.nihon-u.ac.jp/research/gakujutu/58/pdf/L-56.pdf , (参照 2
 ### 参考
 https://qiita.com/take314/items/7eae18045e989d7eaf52
 
-|solver_multigreedy.py|solver_multigreedy2.py|solver_multigreedy3.py|
-|----------------------|----------------------|----------------------|
-|多始点greedyで最も良い経路に対し、2opt|多始点greedyで全経路に対し2opt、その中で最も良い経路を採用|多始点greedyで最も良い経路に対し、2opt|
-|annealingなし|annealingあり|annealingあり|
+### files
+||solver_multigreedy.py|solver_multigreedy2.py|solver_multigreedy3.py|
+|------|----------------------|----------------------|----------------------|
+|手法|多始点greedyで最も良い経路に対し、2opt|多始点greedyで全経路に対し2opt、その中で最も良い経路を採用|多始点greedyで最も良い経路に対し、2opt|
+|annealing|なし|あり|あり|
+|input4|11244.5|10793.6|11042.3|
+
+ ### 結果
+ annealingを加えたファイルでは、annealingによる解の改善は見られなかった。
+
+### 考察
+multigreedy + 2optでlocal最適解を出した。
+このlocal最適解をannealingしたが、うまく山を越えられず、global最適解に至らなかった。
