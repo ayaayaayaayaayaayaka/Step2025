@@ -20,13 +20,12 @@ URL, https://www.cst.nihon-u.ac.jp/research/gakujutu/58/pdf/L-56.pdf , (参照 2
 
 # week6
 ### 概要
-- greedy, 2opt, ACO(ant colony optimization), GA(genetic algorithm)の4手法を試した。
+- greedy, 2opt, annealingを試した。
 - これらをうまく組み合わせて、最も良いアルゴリズムを考えた
 
-#### ACOについて
-フェロモンを介したアリの群行動にヒントを得たアルゴリズム。
+### 参考
+https://qiita.com/take314/items/7eae18045e989d7eaf52
 
-#### GAについて
-生物の進化にヒントを得たアルゴリズム。
-
-### greedy + 2opt + 
+|solver_multigreedy.py|solver_multigreedy2.py|solver_multigreedy3.py|
+|----------------------|----------------------|----------------------|
+|多始点greedy|||
