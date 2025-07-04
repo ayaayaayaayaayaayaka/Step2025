@@ -28,4 +28,5 @@ https://qiita.com/take314/items/7eae18045e989d7eaf52
 
 |solver_multigreedy.py|solver_multigreedy2.py|solver_multigreedy3.py|
 |----------------------|----------------------|----------------------|
-|多始点greedy|||
+|多始点greedyで最も良い経路に対し、2opt|多始点greedyで全経路に対し2opt、その中で最も良い経路を採用|多始点greedyで最も良い経路に対し、2opt|
+|annealingなし|annealingあり|annealingあり|
