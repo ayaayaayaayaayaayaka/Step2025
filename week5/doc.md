@@ -16,3 +16,17 @@
 ### 出典
 - 叶 驍強, 浜松 芳夫, 星野 貴弘. "巡回セールスマン問題におけるn-opt法適用の検討". 平成26年度日本大学理工学部学術講演会論文集, 2014, L-56.
 URL, https://www.cst.nihon-u.ac.jp/research/gakujutu/58/pdf/L-56.pdf , (参照 2025-06-27).
+
+
+# week6
+### 概要
+- greedy, 2opt, ACO(ant colony optimization), GA(genetic algorithm)の4手法を試した。
+- これらをうまく組み合わせて、最も良いアルゴリズムを考えた
+
+#### ACOについて
+フェロモンを介したアリの群行動にヒントを得たアルゴリズム。
+
+#### GAについて
+生物の進化にヒントを得たアルゴリズム。
+
+### greedy + 2opt + 

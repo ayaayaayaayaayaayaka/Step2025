@@ -1,12 +1,8 @@
-#!/usr/bin/env python3
 import sys
 import math
 
 from common import print_tour, read_input, calculate_total_distance
 
-"""
-dist:8,970.05
-"""
 
 def distance(city1, city2):
     return math.sqrt((city1[0] - city2[0]) ** 2 + (city1[1] - city2[1]) ** 2)
@@ -34,7 +30,7 @@ def reverse_segment(improve_tour,swap_start,swap_end):
     return 
 
 def two_opt(original_tour,dist):
-    improve_tour = original_tour[:] # 変数の名前っていうのはそのスコープの中の変数を指す、違うスコープであれば同じ名前でも別のものになる
+    improve_tour = original_tour[:]
     size = len(improve_tour)
     improved = True
     while improved: # 改善の余地がなくなるまでループし続ける
@@ -84,6 +80,3 @@ if __name__ == '__main__':
     tour,total_dist = solve(read_input(sys.argv[1]))
     print_tour(tour)
     print(f"total distance: {total_dist}")
-
-
-
