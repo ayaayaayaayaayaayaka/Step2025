@@ -7,6 +7,7 @@ from common import print_tour, read_input, calculate_total_distance
 """
 多始点greedyに改善
 8592.5(input3)
+11244.5(input4)
 42338.82(input6,N=2048)
 """
 
