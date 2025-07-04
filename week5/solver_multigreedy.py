@@ -6,8 +6,8 @@ from common import print_tour, read_input, calculate_total_distance
 
 """
 多始点greedyに改善
-dist:8592.5
-total distance : 42338.82(N=2048)
+8592.5(input3)
+42338.82(input6,N=2048)
 """
 
 def distance(city1, city2):
