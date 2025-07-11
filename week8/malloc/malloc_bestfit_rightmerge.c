@@ -44,16 +44,7 @@ my_heap_t my_heap;
 // Helper functions (feel free to add/remove/edit!)
 //
 
-// 隣であることが分かりさえすればmergeはできる
-// アドレスごとにsortするのもあり、
-// sortせずに全部探索して一つ一つ見てもできる
-// いつsortするかによって変わる
-// 常にsortした状態を維持するのか、入らない時だけにsortするのか、utlizetionが幾つになったときにsortするのかetc
-// 特定のタイミングのみsortするという方法が考えられる
-// free binだったらリストがいくつかできてしまう、
-// mergeしたら違うbinの中身に入れなければならなくなるかも
-// mergeだけする、free list binだけやる、の後に両方実装した方がわかりやすい
-// いきなり両方は多分複雑
+
 
 void my_add_to_free_list(my_metadata_t *metadata) {
   assert(!metadata->next);
